@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:divider="@drawable/main_divider"
+        android:showDividers="middle"
+        android:background="@color/colorPrimary"
+>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:paddingTop="5dp"
+                      android:textColor="#4488FF"
+                      android:textSize="17sp"
+                      android:text="Static Testings"
+                      android:background="#EEDDAA"
+            />
+
+            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                         android:background="#EEDDAA"
+            >
+                <TableRow>
+                    <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/testP"
+                            android:text="Purchase"
+                            android:textAllCaps="false"
+                    />
+                    <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/testPConsume"
+                            android:textAllCaps="false"
+                            android:text="Consume"/>
+                </TableRow>
+                <TableRow>
+                    <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/testC"
+                            android:textAllCaps="false"
+                            android:text="Cancel"/>
+                    <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/testU"
+                            android:textAllCaps="false"
+                            android:text="Unavailable"/>
+                </TableRow>
+                <TableRow>
+                    <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/testRandomSku"
+                            android:textAllCaps="false"
+                            android:text="Random Sku"/>
+                    <Space android:layout_width="0dp"
+                    android:layout_weight="1"/>
+                </TableRow>
+            </TableLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:paddingTop="5dp"
+                      android:textColor="#4488FF"
+                      android:textSize="17sp"
+                      android:background="#AADDEE"
+                      android:text="InApps Purchased"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:divider="@drawable/sub_divider"
+                          android:showDividers="middle"
+                          android:background="#AADDEE"
+                          android:paddingStart="3dp"
+                          android:paddingEnd="3dp"
+                          android:id="@+id/inAppsPurchasedLL" android:orientation="vertical">
+            </LinearLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:paddingTop="5dp"
+                      android:textColor="#4488FF"
+                      android:textSize="17sp"
+                      android:background="#EEDDAA"
+                      android:text="InApps Available"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:divider="@drawable/sub_divider"
+                          android:showDividers="middle"
+                          android:background="#EEDDAA"
+                          android:paddingStart="3dp"
+                          android:paddingEnd="3dp"
+                          android:id="@+id/inAppsAvailableLL" android:orientation="vertical">
+            </LinearLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:paddingTop="5dp"
+                      android:textColor="#4488FF"
+                      android:textSize="17sp"
+                      android:background="#AADDEE"
+                      android:text="Subscribed"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:divider="@drawable/sub_divider"
+                          android:showDividers="middle"
+                          android:background="#AADDEE"
+                          android:paddingStart="3dp"
+                          android:paddingEnd="3dp"
+                          android:id="@+id/subscribedLL" android:orientation="vertical"/>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:paddingTop="5dp"
+                      android:textColor="#4488FF"
+                      android:textSize="17sp"
+                      android:background="#EEDDAA"
+                      android:text="Subscriptions Available"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:divider="@drawable/sub_divider"
+                          android:showDividers="middle"
+                          android:background="#EEDDAA"
+                          android:paddingStart="3dp"
+                          android:paddingEnd="3dp"
+                          android:id="@+id/subsAvailableLL" android:orientation="vertical"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+            android:id="@+id/messageTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#444444"
+            android:textSize="18sp"
+            android:visibility="gone"/>
+
+</LinearLayout>
