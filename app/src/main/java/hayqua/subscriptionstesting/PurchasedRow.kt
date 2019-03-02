@@ -34,7 +34,7 @@ class PurchasedRow(
         } else {
             purchaseBtn.text = "Unsubscribe"
             purchaseBtn.setOnClickListener {
-                mainActivity.inAppProductsViewModel.cancelSubscription(purchase.purchaseToken)
+                mainActivity.inAppProductsViewModel.cancelSubscription(purchase.sku)
             }
         }
     }

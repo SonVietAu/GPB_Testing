@@ -2,9 +2,11 @@ package hayqua.subscriptionstesting
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.TextView
 import com.android.billingclient.api.BillingClient
@@ -33,13 +35,32 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.testRandomSku).setOnClickListener {
             inAppProductsViewModel.handlePurchase(this, "android.test.random_sku_sdjf", BillingClient.SkuType.INAPP)
         }
+        findViewById<View>(R.id.testPlayStoreDeepLink).setOnClickListener {
+            val uriBuilder = Uri.parse("https://play.google.com/store/account/subscriptions")
+                .buildUpon()
+                // The random sku will open Play Store Subscriptions with a 'Subscription Not Found' error
+                //.appendQueryParameter("sku", "android.test.random_sku_sdjf")
+                .appendQueryParameter("sku", "subscription_10")
+                .appendQueryParameter("package", application.packageName)
+
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = uriBuilder.build()
+            }
+            startActivity(intent)
+        }
+
+        connectionBtn.setOnClickListener {
+            if (inAppProductsViewModel.isServiceConnectedMLD.value ?: false)
+                inAppProductsViewModel.disconnectBillingClient()
+            else
+                inAppProductsViewModel.connectBillingClient()
+        }
 
         inAppProductsViewModel.messageMLD.observe(this, Observer {
             if (it != null)
                 showInfoMessage(it)
             else
                 showInfoMessage("No Messages")
-                //hideMessageTV()
         })
 
         inAppProductsViewModel.inAppsPurchasedMLD.observe(this, Observer {
@@ -112,9 +133,36 @@ class MainActivity : AppCompatActivity() {
             if (it ?: false) {
                 inAppProductsViewModel.queryINAPPAsync()
                 inAppProductsViewModel.querySUBSAsync()
+
+                staticTestingsTL.visibility = View.VISIBLE
+
+                staticTestingsErrorDisplay.visibility = View.GONE
+                inAppsPurchasedErrorDisplay.visibility = View.GONE
+                inAppsAvailableErrorDisplay.visibility = View.GONE
+                subscribedErrorDisplay.visibility = View.GONE
+                subsAvailableErrorDisplay.visibility = View.GONE
+
+                hideMessageTV()
+                connectionBtn.text = "End Billing Client"
             } else {
-                // should display is not connected and remove all inappa and subs
-                showInfoMessage("Billing Services Disconnected")
+                // should display is not connected and remove all in-app and subs
+                inAppsPurchasedLL.removeAllViews()
+                inAppsAvailableLL.removeAllViews()
+                subscribedLL.removeAllViews()
+                subsAvailableLL.removeAllViews()
+
+                staticTestingsTL.visibility = View.GONE
+
+                staticTestingsErrorDisplay.visibility = View.VISIBLE
+                inAppsPurchasedErrorDisplay.visibility = View.VISIBLE
+                inAppsAvailableErrorDisplay.visibility = View.VISIBLE
+                subscribedErrorDisplay.visibility = View.VISIBLE
+                subsAvailableErrorDisplay.visibility = View.VISIBLE
+
+                showInfoMessage("Billing Services Ended")
+
+                connectionBtn.text = "Rebuild Billing Client"
+
             }
         })
 

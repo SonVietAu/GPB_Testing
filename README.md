@@ -56,6 +56,14 @@ This initial implementation was completed successfully. Completing the overheads
 ## Testing the App
 If anyone would like to try this App on a 'closed testing track', please email ddmobileapp@gmail.com for the Play Store link. **Warning: real account will be deducted for purchase and subscriptions**.
 
+## V1.0.1 Fixes
+### Unsubscribe Implementation
+Provided deep link to Play Store.
+One slight problem of not being able to mock subscribing and hence unable to execute an unsubscribe on a development device. To have a partial test of un-subscribing on a development device, a direct deep link to the Play Store was implemented and a random SKU is sent as a parameter to the deep link. The direct deep link gave some indication that the deep link will work.
+
+### Better Handling of billingClient Connection.
+Google Play Billing only provide an 'endConnection' to the billingClient. This is not the same as closing, disconnecting or losing such connection. Ending a connection to a billing client render the billing client unusable and attempt to reconnect by simply 'startConnection' will result in a 'DEVELOPER_ERROR'. To use GPB again, a different billing client will need to be built.
+
 ## Next Steps
 There are still a more requirements that will need completing to consider this GPB to be wholly successful. In the next version or versions to come, the following amongst others will be added: better handling of billingClient connection, refund, promo code, downgrade, upgrade, and server verifications.
 

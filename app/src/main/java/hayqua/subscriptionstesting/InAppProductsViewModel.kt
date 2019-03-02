@@ -4,12 +4,14 @@ import android.app.Activity
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import com.android.billingclient.api.*
 
 class InAppProductsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var billingClient: BillingClient
+    lateinit var billingClient: BillingClient
 
     // ensure that the billingClient is connected before doing any billing action
     var isServiceConnectedMLD = MutableLiveData<Boolean>()
@@ -25,7 +27,11 @@ class InAppProductsViewModel(application: Application) : AndroidViewModel(applic
     val messageMLD = MutableLiveData<String>()
 
     init {
-        billingClient = BillingClient.newBuilder(application).setListener(object : PurchasesUpdatedListener {
+        createAndStartBillingClient()
+    }
+
+    private fun createAndStartBillingClient() {
+        billingClient = BillingClient.newBuilder(getApplication()).setListener(object : PurchasesUpdatedListener {
             override fun onPurchasesUpdated(@BillingClient.BillingResponse responseCode: Int, purchases: MutableList<Purchase>?) {
 
                 // Reset purchased and available
@@ -220,7 +226,16 @@ class InAppProductsViewModel(application: Application) : AndroidViewModel(applic
         return null
     }
 
-    fun cancelSubscription(purchaseToken: String) {
+    fun cancelSubscription(skuId: String) {
+        val uriBuilder = Uri.parse("https://play.google.com/store/account/subscriptions")
+            .buildUpon()
+            .appendQueryParameter("sku", skuId)
+            .appendQueryParameter("package", getApplication<Application>().packageName)
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = uriBuilder.build()
+        }
+        getApplication<Application>().startActivity(intent)
     }
 
     fun consumePurchase(purchaseToken: String) {
@@ -333,6 +348,20 @@ class InAppProductsViewModel(application: Application) : AndroidViewModel(applic
             // (feel free to introduce your retry policy here).
             startServiceConnection(runnable)
         }
+    }
+
+    fun connectBillingClient() {
+        // No such thing as reconnecting billingClient, have to recreate and start the new connection
+        createAndStartBillingClient()
+    }
+
+    fun disconnectBillingClient() {
+        Log.d("TempGroupIcon", "calling billingClient endConnection")
+        billingClient.endConnection()
+
+
+        // The function 'endConnection' will not call 'onBillingServiceDisconnected'. To let the rest of the App know that billingClient is Disconnected, isServiceConnectedMLD will get updated to 'false'
+        isServiceConnectedMLD.value = false
     }
 
 }

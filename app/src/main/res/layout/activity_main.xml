@@ -9,7 +9,12 @@
         android:background="@color/colorPrimary"
 >
 
-    <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#EEDDAA"
+    >
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -21,11 +26,18 @@
                       android:textColor="#4488FF"
                       android:textSize="17sp"
                       android:text="Static Testings"
-                      android:background="#EEDDAA"
             />
 
-            <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                         android:background="#EEDDAA"
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/staticTestingsErrorDisplay"
+                    android:text=" Require Billing Client "/>
+
+            <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/staticTestingsTL"
             >
                 <TableRow>
                     <Button
@@ -68,8 +80,15 @@
                             android:id="@+id/testRandomSku"
                             android:textAllCaps="false"
                             android:text="Random Sku"/>
-                    <Space android:layout_width="0dp"
-                    android:layout_weight="1"/>
+                    <Button
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/testPlayStoreDeepLink"
+                            android:textAllCaps="false"
+                            android:text="Play Store DL"/>
+                    <!--Space android:layout_width="0dp"
+                    android:layout_weight="1"/-->
                 </TableRow>
             </TableLayout>
 
@@ -79,6 +98,13 @@
                       android:textSize="17sp"
                       android:background="#AADDEE"
                       android:text="InApps Purchased"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/inAppsPurchasedErrorDisplay"
+                    android:background="#AADDEE"
+                    android:text=" Require Billing Client "/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:divider="@drawable/sub_divider"
@@ -93,13 +119,17 @@
                       android:paddingTop="5dp"
                       android:textColor="#4488FF"
                       android:textSize="17sp"
-                      android:background="#EEDDAA"
                       android:text="InApps Available"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/inAppsAvailableErrorDisplay"
+                    android:text=" Require Billing Client "/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:divider="@drawable/sub_divider"
                           android:showDividers="middle"
-                          android:background="#EEDDAA"
                           android:paddingStart="3dp"
                           android:paddingEnd="3dp"
                           android:id="@+id/inAppsAvailableLL" android:orientation="vertical">
@@ -111,6 +141,13 @@
                       android:textSize="17sp"
                       android:background="#AADDEE"
                       android:text="Subscribed"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/subscribedErrorDisplay"
+                    android:background="#AADDEE"
+                    android:text=" Require Billing Client "/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:divider="@drawable/sub_divider"
@@ -124,13 +161,17 @@
                       android:paddingTop="5dp"
                       android:textColor="#4488FF"
                       android:textSize="17sp"
-                      android:background="#EEDDAA"
                       android:text="Subscriptions Available"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/subsAvailableErrorDisplay"
+                    android:text=" Require Billing Client "/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                           android:divider="@drawable/sub_divider"
                           android:showDividers="middle"
-                          android:background="#EEDDAA"
                           android:paddingStart="3dp"
                           android:paddingEnd="3dp"
                           android:id="@+id/subsAvailableLL" android:orientation="vertical"/>
@@ -147,5 +188,12 @@
             android:textColor="#444444"
             android:textSize="18sp"
             android:visibility="gone"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/connectionBtn"
+            android:textAllCaps="false"
+    />
 
 </LinearLayout>
