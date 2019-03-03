@@ -1,5 +1,7 @@
 package hayqua.subscriptionstesting
 
+import android.content.Intent
+import android.net.Uri
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
@@ -15,10 +17,11 @@ import com.android.billingclient.api.SkuDetails
 // Display and Control: Subscription("Small and Ready", "Organisation with up to 10 staffs", "", "Subs", "Yearly", 10f),
 
 class PurchasedRow(
-        mainActivity: MainActivity,
-        val purchase: Purchase,
-        @BillingClient.SkuType val skuType: String,
-        var skuDetails: SkuDetails?) : FrameLayout(mainActivity) {
+    mainActivity: MainActivity,
+    val purchase: Purchase,
+    @BillingClient.SkuType val skuType: String,
+    var skuDetails: SkuDetails?
+) : FrameLayout(mainActivity) {
 
     private val mainView = mainActivity.layoutInflater.inflate(R.layout.available_product_row, this, true)
 
@@ -34,20 +37,34 @@ class PurchasedRow(
         } else {
             purchaseBtn.text = "Unsubscribe"
             purchaseBtn.setOnClickListener {
-                mainActivity.inAppProductsViewModel.cancelSubscription(purchase.sku)
+                unsubscribeViaDeepLink(mainActivity, purchase.sku)
             }
         }
     }
 
     private fun populateView() {
-        mainView.findViewById<TextView>(R.id.productTitleTV).text = skuDetails?.title ?: "Product Information Unavailable"
+        mainView.findViewById<TextView>(R.id.productTitleTV).text = skuDetails?.title ?:
+                "Product Information Unavailable"
         mainView.findViewById<TextView>(R.id.descriptionTV).text = skuDetails?.description
         if (skuType == BillingClient.SkuType.SUBS) {
-            val price = "${skuDetails?.price} ${skuDetails?.subscriptionPeriod}${if (purchase.isAutoRenewing) " (AutoRenewing)" else ""}"
+            val price =
+                "${skuDetails?.price} ${skuDetails?.subscriptionPeriod}${if (purchase.isAutoRenewing) " (AutoRenewing)" else ""}"
             mainView.findViewById<TextView>(R.id.priceTV).text = price
         } else {
             mainView.findViewById<TextView>(R.id.priceTV).visibility = View.GONE
         }
+    }
+
+    fun unsubscribeViaDeepLink(mainActivity: MainActivity, skuId: String) {
+        val uriBuilder = Uri.parse("https://play.google.com/store/account/subscriptions")
+            .buildUpon()
+            .appendQueryParameter("sku", skuId)
+            .appendQueryParameter("package", mainActivity.application.packageName)
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = uriBuilder.build()
+        }
+        mainActivity.startActivity(intent)
     }
 
 }

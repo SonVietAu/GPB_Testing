@@ -226,18 +226,6 @@ class InAppProductsViewModel(application: Application) : AndroidViewModel(applic
         return null
     }
 
-    fun cancelSubscription(skuId: String) {
-        val uriBuilder = Uri.parse("https://play.google.com/store/account/subscriptions")
-            .buildUpon()
-            .appendQueryParameter("sku", skuId)
-            .appendQueryParameter("package", getApplication<Application>().packageName)
-
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = uriBuilder.build()
-        }
-        getApplication<Application>().startActivity(intent)
-    }
-
     fun consumePurchase(purchaseToken: String) {
         // Think consume fun is available from a 'Purchased' so need to retrieve this before consuming
 
